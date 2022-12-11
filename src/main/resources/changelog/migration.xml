@@ -1,0 +1,252 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+   http://www.liquibase.org/xml/ns/dbchangelog
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="createTables" author="mmanasyan">
+        <createTable tableName="attribute">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+        <createTable tableName="region">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <createTable tableName="user">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="surname" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="phone_number" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pic_url" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="role" type="ENUM('ADMIN','SELLER','CLIENT')" defaultValue="CLIENT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="ENUM('ACTIVE','BLOCKED','IN_PENDING')" defaultValue="IN_PENDING">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <createTable tableName="city_village">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="region_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <createTable tableName="product">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="address" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="text">
+                <constraints nullable="true"/>
+            </column>
+            <column name="type" type="ENUM('HOTEL','COTTAGE','GUEST_HOUSE')" defaultValue="GUEST_HOUSE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pic_url" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="rating" type="int">
+                <constraints nullable="true"/>
+            </column>
+            <column name="google_address" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="status" type="ENUM('ACTIVE','INACTIVE')" defaultValue="INACTIVE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="RATING_USER_COUNT" type="int">
+                <constraints nullable="true"/>
+            </column>
+            <column name="USER_ID" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="city_village_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <createTable tableName="product_gallery">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="picture_url" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="product_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <createTable tableName="comments">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="text" type="text">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="product_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <createTable tableName="user_book">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="user_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="product_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="start_date" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="end_date" type="date">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <createTable tableName="room">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="price" type="double">
+                <constraints nullable="false"/>
+            </column>
+            <column name="start_date" type="date">
+                <constraints nullable="true"/>
+            </column>
+            <column name="end_date" type="date">
+                <constraints nullable="true"/>
+            </column>
+            <column name="beds_count" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="room_status" type="ENUM('ACTIVE','INACTIVE')" defaultValue="ACTIVE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="product_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <createTable tableName="attribute_value">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="is_exist" type="tinyint">
+                <constraints nullable="true"/>
+            </column>
+            <column name="attribute_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="room_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+
+    </changeSet>
+
+    <changeSet id="addForeignKey" author="mmanasyan">
+        <addForeignKeyConstraint baseTableName="city_village"
+                                 baseColumnNames="region_id"
+                                 constraintName="city_village_region_id_fk"
+                                 referencedTableName="region"
+                                 referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="product"
+                                 baseColumnNames="user_id"
+                                 constraintName="product_user_id_user_id_fk"
+                                 referencedTableName="user"
+                                 referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="product"
+                                 baseColumnNames="city_village_id"
+                                 constraintName="product_city_village_id_city_village_id_fk"
+                                 referencedTableName="city_village"
+                                 referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="product_gallery"
+                                 baseColumnNames="product_id"
+                                 constraintName="product_gallery_product_id_product_id_fk"
+                                 referencedTableName="product"
+                                 referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="comments"
+                                 baseColumnNames="product_id"
+                                 constraintName="comments_product_id_product_id_fk"
+                                 referencedTableName="product"
+                                 referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="comments"
+                                 baseColumnNames="user_id"
+                                 constraintName="comments_user_id_product_id_fk"
+                                 referencedTableName="user"
+                                 referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="user_book"
+                                 baseColumnNames="product_id"
+                                 constraintName="user_book_product_id_product_id_fk"
+                                 referencedTableName="product"
+                                 referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="user_book"
+                                 baseColumnNames="user_id"
+                                 constraintName="user_book_user_id_user_id_fk"
+                                 referencedTableName="user"
+                                 referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="room"
+                                 baseColumnNames="product_id"
+                                 constraintName="room_product_id_product_id_fk"
+                                 referencedTableName="product"
+                                 referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="attribute_value"
+                                 baseColumnNames="room_id"
+                                 constraintName="attribute_value_room_id_room_id_fk"
+                                 referencedTableName="room"
+                                 referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="attribute_value"
+                                 baseColumnNames="attribute_id"
+                                 constraintName="attribute_value_attribute_id_attribute_id_fk"
+                                 referencedTableName="attribute"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+
+    <changeSet id="createColumn" author="hmkrtchyan">
+        <addColumn tableName="user">
+            <column name="is_enabled" type="boolean"/>
+            <column name="verify_token" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>
