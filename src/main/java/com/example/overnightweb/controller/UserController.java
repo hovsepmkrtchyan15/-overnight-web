@@ -43,7 +43,7 @@ public class UserController {
             return "signin";
         }
         userService.save(user);
-        return "signin";
+        return "/signin";
 
     }
 }
